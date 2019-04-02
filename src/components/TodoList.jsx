@@ -5,7 +5,7 @@ import TodoItem from './TodoItem';
 
 const TodoList = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: 0 0 50px;
   padding: 0;
 `;
 
