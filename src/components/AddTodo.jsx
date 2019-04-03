@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import classnames from 'classnames';
 
 const ModalWrapper = styled.div`
   position: fixed;
-  top: 0;
+  top: -100%;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(17, 17, 17, .5);
+  background: rgba(17, 17, 17, .8);
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.4s ease-in;
+
+  &.visible {
+    top: 0;
+  }
 `;
 
 const InputBlock = styled.div`
@@ -28,7 +34,7 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-export default function({ addTodo, closeModal }) {
+export default function({ addTodo, closeModal, modalVisible }) {
   const [input, setInput] = useState('');
   const [id, setId] = useState(localStorage.getItem('todos')
     ? localStorage.getItem('todos').length
@@ -50,11 +56,11 @@ export default function({ addTodo, closeModal }) {
       return;
     }
 
-    closeModal()
+    closeModal();
   }
 
   return (
-    <ModalWrapper onClick={e => onModalWrapperClick(e.target.nodeName)}>
+    <ModalWrapper onClick={e => onModalWrapperClick(e.target.nodeName)} className={classnames({visible: modalVisible})}>
       <InputBlock>
         <Input
           value={input}

@@ -9,6 +9,7 @@ import AddTodo from './components/AddTodo';
 const App = styled.section`
   position: relative;
   flex-basis: 30%;
+  min-width: 300px;
   margin: auto;
   padding: 20px 15px;
   background: #fff;
@@ -38,7 +39,7 @@ const AddTodoButton = styled.button`
 
 export default function() {
   const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todos')) || []);
-  const [inputVisible, setInputVisibility] = useState(false);
+  const [modalVisible, setModalVisibility] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify([...todos]))
@@ -46,7 +47,7 @@ export default function() {
   
   const addTodo = (id, text) => {
     setTodos([...todos, {id, text, completed: false}]);
-    setInputVisibility(false);
+    setModalVisibility(false);
   };
 
   const removeTodo = id => {
@@ -64,11 +65,11 @@ export default function() {
   };
 
   const addTodoButtonClick = () => {
-    setInputVisibility(true);
+    setModalVisibility(true);
   }
 
   const closeModal = () => {
-    setInputVisibility(false);
+    setModalVisibility(false);
   }
 
   return (
@@ -76,7 +77,7 @@ export default function() {
       <Header />
       <TodoList todos={todos} removeTodo={removeTodo} toggleTodo={toggleTodo} />
       <AddTodoButton onClick={addTodoButtonClick}>+</AddTodoButton>
-      {inputVisible && <AddTodo addTodo={addTodo} closeModal={closeModal} />}
+      <AddTodo addTodo={addTodo} modalVisible={modalVisible} closeModal={closeModal} />
     </App>
   )
 };
